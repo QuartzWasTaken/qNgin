@@ -121,7 +121,6 @@ int jsonToGrid(grid g, const char* path)
         tileType tType = stringToTileType(type->valuestring);
         
         g[yPos][xPos] = tType;
-        printf("\n\n%d\n\n", g[yPos][xPos]);
     }
 
     end:

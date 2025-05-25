@@ -11,12 +11,19 @@ void buildTextureMap()
 {
     textureMap = hashmap_new(sizeof(textureMapEntry), 0, 0, 0, int_hash, int_compare, NULL, NULL);
 
-    textureMapEntry entry = {
+    textureMapEntry ground = {
         .key = 1,
         .tex = LoadTexture("assets/tile_ground.png")
     };
-    // Ajout autres textures
-    hashmap_set(textureMap, &entry);
+    hashmap_set(textureMap, &ground);
+
+    textureMapEntry error = {
+        .key = -1,
+        .tex = LoadTexture("assets/tile_error.png")
+    };
+    hashmap_set(textureMap, &error);
+
+
 
 }
 
@@ -28,6 +35,7 @@ void renderGrid(grid g)
         {
             int lookupKey = g[y][x];
 
+            //TODO : Régler le warning
             textureMapEntry* found = hashmap_get(textureMap, &lookupKey);
 
             if(found)
