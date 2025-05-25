@@ -3,6 +3,7 @@
 
 #include "raylib.h"
 #include "cjson/cJSON.h"
+#include "utils/utils.h"
 #include "utils/tileUtils.h"
 #include "tileRenderer.h"
 
@@ -12,14 +13,15 @@ const int screenHeight = 460;
 int main()
 {
     grid fgGrid;
-    char* jsonContents = readFileToString("test.json");
+    initGrid(fgGrid);
+
 
     jsonToGrid(fgGrid, "test.json");
     
     InitWindow(screenHeight, screenHeight, "wawawawa");
 
-    const Texture2D groundTex = LoadTexture("assets/tile_ground.png");
-    struct hashmap* textureMap;
+    struct hashmap* textureMap = hashmap_new(sizeof(int), 0, 0, 0, int_hash, int_compare, NULL, NULL);
+
     buildTextureMap();
 
     SetTargetFPS(60);
@@ -32,14 +34,12 @@ int main()
         BeginDrawing();
 
         ClearBackground(RAYWHITE);
-        DrawText("texture rigolo", 190, 200, 20, LIGHTGRAY);
-        DrawTexture(groundTex, screenWidth/2, screenHeight/2, WHITE);
-        struct hashmap *textureMap = NULL;
+        DrawText("test textures", 190, 200, 20, LIGHTGRAY);
         renderGrid(fgGrid);
 
         EndDrawing();
     }
-
+    hashmap_free(textureMap);
     CloseWindow();
     printf("Hello !\n");
     return 0;

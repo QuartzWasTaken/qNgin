@@ -15,10 +15,9 @@ void buildTextureMap()
         .key = 1,
         .tex = LoadTexture("assets/tile_ground.png")
     };
-
+    // Ajout autres textures
     hashmap_set(textureMap, &entry);
 
-    // Ajouter d'autres textures ici si besoin...
 }
 
 void renderGrid(grid g)

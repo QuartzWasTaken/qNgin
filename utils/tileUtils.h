@@ -31,3 +31,5 @@ typedef tileType grid[MAX_MAP_HEIGHT][MAX_MAP_WIDTH];
 
 char* readFileToString(const char* filename);
 int jsonToGrid(grid g, const char* s);
+
+void initGrid(grid g);

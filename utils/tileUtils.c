@@ -72,6 +72,16 @@ const char* tileTypeToString(tileType type)
     return "TILE_ERROR";
 }
 
+void initGrid(grid g)
+{
+    for(int y = 0; y < MAX_MAP_HEIGHT; y++)
+    {
+        for(int x = 0; x < MAX_MAP_WIDTH; x++)
+        {
+            g[y][x] = 0;
+        }
+    }
+}
 
 int jsonToGrid(grid g, const char* path)
 {
@@ -79,10 +89,7 @@ int jsonToGrid(grid g, const char* path)
 
     const cJSON* tile = NULL;
     const cJSON* tiles = NULL;
-    const cJSON* index = NULL;
-    const cJSON* type = NULL;
-    const cJSON* x = NULL;
-    const cJSON* y = NULL;
+
     
     cJSON* f = cJSON_Parse(readFileToString(path));
     if(f == NULL) // Si y a eu une erreur
