@@ -16,7 +16,6 @@ int main()
     grid fgGrid;
     initGrid(fgGrid);
 
-
     jsonToGrid(fgGrid, "test.json");
     
     InitWindow(screenHeight, screenHeight, "wawawawa");
@@ -33,10 +32,26 @@ int main()
     camera.zoom = 1.0f;
     camera.rotation = 0.0f;
 
+    int mouseX;
+    int mouseY;
+
+    int mouseGridX;
+    int mouseGridY;
 
     while(!WindowShouldClose())
     {
         Vector2 movementVector = Vector2Zero();
+
+        mouseX = GetMouseX();
+        mouseY = GetMouseY();
+
+        mouseGridX = mouseX / 16;
+        mouseGridY = mouseY / 16;
+
+        if(IsMouseButtonDown(0))
+        {
+            fgGrid[mouseGridY][mouseGridX] = TILE_GROUND;
+        }
 
         // Update
         if(IsKeyDown(KEY_S))
@@ -66,9 +81,12 @@ int main()
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
-        DrawText("test textures", 190, 200, 20, LIGHTGRAY);
+        DrawText("test textures", 190, 200, 10, LIGHTGRAY);
         DrawText(TextFormat("CamPos : %.0f %.0f", camera.target.x, camera.target.y), 0, 30, 20, LIGHTGRAY);
-        DrawText("PLAYING", 0, 0, 20, LIGHTGRAY);
+        DrawText("PLAYING", 0, 0, 10, LIGHTGRAY);
+        DrawText(TextFormat("MousePos : %d %d", mouseX, mouseY), 0, 130, 20, LIGHTGRAY);
+        DrawText(TextFormat("MouseGridPos : %d %d", mouseGridX, mouseGridY), 0, 100, 20, LIGHTGRAY);
+
         BeginMode2D(camera);
 
         renderGrid(fgGrid);
