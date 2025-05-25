@@ -3,7 +3,10 @@
 #include <string.h>
 
 #include <cjson/cJSON.h>
-#include "utils.h"
+#include "tileUtils.h"
+#include "hashmap.h"
+
+#include "raylib.h"
 
 const tileTypeMapping tileTypeMappings[] =
 {
@@ -21,7 +24,7 @@ const char* tileTypeStrings[] =
 
 const size_t tileTypeMappingCount = sizeof(tileTypeMappings) / sizeof(tileTypeMappings[0]);
 
-char* read_file_to_string(const char* filename) {
+char* readFileToString(const char* filename) {
     FILE* file = fopen(filename, "rb");
     if (!file) {
         perror("Error opening file");
@@ -81,7 +84,7 @@ int jsonToGrid(grid g, const char* path)
     const cJSON* x = NULL;
     const cJSON* y = NULL;
     
-    cJSON* f = cJSON_Parse(read_file_to_string(path));
+    cJSON* f = cJSON_Parse(readFileToString(path));
     if(f == NULL) // Si y a eu une erreur
     {
         const char* error_ptr = cJSON_GetErrorPtr();
