@@ -4,6 +4,7 @@
 
 #define MAX_MAP_HEIGHT 10
 #define MAX_MAP_WIDTH 10
+#define CHUNK_WIDTH 8
 
 typedef enum
 {
@@ -11,6 +12,12 @@ typedef enum
     TILE_AIR = 0,
     TILE_GROUND = 1
 } tileType;
+
+typedef struct
+{
+    tileType type;
+    short attributs;
+} tile;
 
 typedef struct
 {
@@ -27,7 +34,7 @@ typedef struct
 tileType stringToTileType(const char* str);
 const char* tileTypeToString(tileType type);
 
-typedef tileType grid[MAX_MAP_HEIGHT][MAX_MAP_WIDTH];
+typedef tile grid[MAX_MAP_HEIGHT][MAX_MAP_WIDTH];
 
 char* readFileToString(const char* filename);
 int jsonToGrid(grid g, const char* s);
