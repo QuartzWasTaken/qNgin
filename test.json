@@ -2,7 +2,7 @@
     "tiles":
     [
         {
-            "type":"TILE_GROUND",
+            "type":"fizuer",
             "x": 0,
             "y":0
         },
