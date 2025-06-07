@@ -23,4 +23,4 @@ void buildTextureMap(t_textureMap* texMap, t_tileTypeMap typeMap);
 void bindTextures(Tilemap& tilemap, const t_textureMap& texMap);
 
 std::string readFileToString(const std::string& filename);
-int jsonToGrid(Tilemap t, const char* s);
+int jsonToGrid(Tilemap& t, const char* s);

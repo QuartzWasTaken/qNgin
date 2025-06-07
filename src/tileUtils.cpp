@@ -17,13 +17,15 @@
 
 
 t_tileTypeMap tileTypeMap = {
-    {"TILE_GROUND", 0},
+    {"TILE_EMPTY", 0},
+    {"TILE_GROUND", 1},
     {"TILE_ERROR", -1}
 };
 
 t_textureMap textureMap;
 
-void printVector(const std::vector<Tile>& vec) {
+void printVector(const std::vector<Tile>& vec)
+{
     std::cout << "[ ";
     for (const auto& elem : vec) {
         std::cout << elem << " ";
@@ -31,7 +33,8 @@ void printVector(const std::vector<Tile>& vec) {
     std::cout << "]\n";
 }
 
-void print2DVector(const std::vector<std::vector<Tile>>& matrix) {
+void print2DVector(const std::vector<std::vector<Tile>>& matrix)
+{
     for (const auto& row : matrix) {
         printVector(row);
     }
@@ -71,6 +74,8 @@ void bindTextures(Tilemap& t, const t_textureMap& texMap)
             int tileType = listeTiles[y][x].getType();
 
             auto it = texMap.find(tileType);
+            std::cout << "Texture à bind :  ";
+            std::cout << tileType << std::endl;
             if (it != texMap.end())
             {
                 listeTiles[y][x].setTexture(&it->second);
@@ -91,7 +96,7 @@ std::string readFileToString(const std::string& filename)
 // Tilemap contient des tiles contenues dans une variable grille
 // TIle : texture (pour le moment), puis collision
 
-int jsonToGrid(Tilemap t, const char* path)
+int jsonToGrid(Tilemap& t, const char* path)
 {
     int status = 0;
 
