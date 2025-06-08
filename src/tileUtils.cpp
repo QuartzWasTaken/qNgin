@@ -1,3 +1,4 @@
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,7 +14,7 @@
 #include "tileUtils.h"
 #include "Tile.h"
 #include "Tilemap.h"
-#include <iostream>
+#include "TextureManager.h"
 
 
 t_tileTypeMap tileTypeMap = {
@@ -24,7 +25,7 @@ t_tileTypeMap tileTypeMap = {
 
 t_textureMap textureMap;
 
-void printVector(const std::vector<Tile>& vec)
+void printVector(const std::vector<Tile>& vec) // allègrement généré
 {
     std::cout << "[ ";
     for (const auto& elem : vec) {
@@ -39,33 +40,10 @@ void print2DVector(const std::vector<std::vector<Tile>>& matrix)
         printVector(row);
     }
 }
-void buildTextureMap(t_textureMap* texMap, t_tileTypeMap typeMap) // TEXMAP : INT TEX   ;    TYPEMAP : STRING INT
+
+void bindTextures(Tilemap& t, const TextureManager& texManager) // ahahahhahhazhziehfizuherizhfiehfi j'adore les pointeurs
 {
-    for(auto& pair : typeMap)
-    {
-        std::string texName = pair.first; // on recup le nom de la texture (en full maj vu que ça vient du json)
-
-        std::string texNameLower = texName;
-
-        for (char& c : texNameLower) // toupper mais pour un string c'est débile
-        {
-            c = std::tolower(static_cast<unsigned char>(c));
-        }
-
-        std::string filePath = "assets/" + texNameLower + ".png"; // ça marchera peutetre
-        std::cout << "filePath : " << filePath << std::endl;
-        (*texMap)[pair.second] = LoadTexture(filePath.c_str());
-        if((*texMap)[pair.second].id != 0)
-        {
-            std::cout << "Texture actually loaded successfully" << std::endl;
-            std::cout << (*texMap)[pair.second].id << std::endl;
-        }
-    }
-}
-
-void bindTextures(Tilemap& t, const t_textureMap& texMap)
-{
-    auto& listeTiles = t.getListe();  // non-const access
+    auto& listeTiles = t.getListe();  // acces non const (important)
 
     for (size_t y = 0; y < listeTiles.size(); y++)
     {
@@ -73,13 +51,7 @@ void bindTextures(Tilemap& t, const t_textureMap& texMap)
         {
             int tileType = listeTiles[y][x].getType();
 
-            auto it = texMap.find(tileType);
-            std::cout << "Texture à bind :  ";
-            std::cout << tileType << std::endl;
-            if (it != texMap.end())
-            {
-                listeTiles[y][x].setTexture(&it->second);
-            }
+            listeTiles[y][x].setTexture(texManager.getTexture(tileType));
         }
     }
 }
@@ -96,7 +68,7 @@ std::string readFileToString(const std::string& filename)
 // Tilemap contient des tiles contenues dans une variable grille
 // TIle : texture (pour le moment), puis collision
 
-int jsonToGrid(Tilemap& t, const char* path)
+int jsonToGrid(Tilemap& t, const char* path) // écrit en C avant de passer au C++
 {
     int status = 0;
 
@@ -127,7 +99,7 @@ int jsonToGrid(Tilemap& t, const char* path)
         if(!cJSON_IsNumber(x) || !cJSON_IsNumber(y))
         {
             status = 0;
-            goto end;
+            goto end; // goto :glad:
         }
 
         int xPos = x->valueint;
