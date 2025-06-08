@@ -62,11 +62,11 @@ int main()
         mouseGridX = mouseX / 16;
         mouseGridY = mouseY / 16;
 
-        if(IsMouseButtonDown(0))
+        if(IsMouseButtonDown(0) && mouseGridX < MAX_MAP_WIDTH && mouseGridY < MAX_MAP_HEIGHT)
         {
             fgGrid.getListe()[mouseGridY][mouseGridX].setType(1);
             fgGrid.getListe()[mouseGridY][mouseGridX].setTexture(textureManager.getTexture(1));
-            std::cout << "Changé le type de la tile " << mouseGridX << ";" << mouseGridY << "vers 1" << std::endl;
+            std::cout << "Changé le type de la tile " << mouseGridX << ";" << mouseGridY << " vers 1" << std::endl;
         }
 
         // Update
