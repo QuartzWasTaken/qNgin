@@ -61,10 +61,11 @@ int main()
         mouseGridX = mouseX / 16;
         mouseGridY = mouseY / 16;
 
-        // if(IsMouseButtonDown(0))
-        // {
-        //     fgGrid[mouseGridY][mouseGridX] = TILE_GROUND;
-        // }
+        if(IsMouseButtonDown(0))
+        {
+            fgGrid.getListe()[mouseGridY][mouseGridX].setType(1);
+            std::cout << "type de la tile " << mouseGridX << ";" << mouseGridY << " est mis à 1" << std::endl;
+        }
 
         // Update
         if(IsKeyDown(KEY_S))
