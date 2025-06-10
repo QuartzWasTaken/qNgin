@@ -29,9 +29,11 @@ int main()
     jsonToGrid(fgGrid, "test.json");
 
     TextureManager textureManager;
+    std::cout << "------ Initialisation de la fenêtre... ------" << std::endl;
+    InitWindow(screenHeight, screenHeight, "wawawawa");
+
     std::cout << "------ Chargement des textures... ------" << std::endl;
 
-    InitWindow(screenHeight, screenHeight, "wawawawa");
 
     textureManager.loadTextures(tileTypeMap);
 
