@@ -64,6 +64,20 @@ std::string readFileToString(const std::string& filename)
     return buffer.str();
 }
 
+int writeStringToFile(std::string input, const std::string& filename)
+{
+    std::ofstream outFile(filename);
+    if (!outFile)
+    {
+        // Handle error if file couldn't be opened
+        return 1;
+    }
+
+    outFile << input; // write the string content to the file
+
+    // File is automatically closed when outFile goes out of scope
+    return 0;
+}
 
 // Tilemap contient des tiles contenues dans une variable grille
 // TIle : texture (pour le moment), puis collision
@@ -166,4 +180,39 @@ int jsonToGrid(Tilemap& t, const char* path) // écrit en C avant de passer au C
         cJSON_Delete(f);
         print2DVector(t.getListe());
         return status;
+}
+
+std::string gridToJson(Tilemap t)
+{
+    std::string output;
+    const std::vector<std::vector<Tile>> tiles = t.getListe();
+    int type;
+    cJSON* container = cJSON_CreateObject();
+    cJSON* tilemap = cJSON_CreateArray();
+
+    if(tilemap == NULL)
+    {
+        std::cout << "Erreur dans la création de l'objet tilemap" << std::endl;
+        goto end;
+    }
+
+    for (const auto& row : t.getListe())
+    {
+        cJSON* jsonRow = cJSON_CreateArray();
+
+        for (Tile val : row)
+        {
+            cJSON_AddItemToArray(jsonRow, cJSON_CreateNumber(val.getType()));
+        }
+
+        cJSON_AddItemToArray(tilemap, jsonRow);
+    }
+
+    cJSON_AddItemToObject(container, "tilemap", tilemap);
+    output = cJSON_Print(container);
+
+    end:
+    cJSON_Delete(tilemap);
+    return output;
+
 }

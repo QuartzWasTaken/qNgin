@@ -7,8 +7,8 @@
 #include "Tilemap.h"
 #include "TextureManager.h"
 
-#define MAX_MAP_HEIGHT 10
-#define MAX_MAP_WIDTH 10
+#define MAX_MAP_HEIGHT 50
+#define MAX_MAP_WIDTH 50
 
 // hashmap str int se lie avec
 // hahsmap int tex pour donner le couple str-tex
@@ -24,4 +24,6 @@ void loadTextures(std::unordered_map<int, Texture2D>& textureStorage, const t_ti
 void bindTextures(Tilemap& tilemap, const TextureManager& texManager);
 
 std::string readFileToString(const std::string& filename);
+int writeStringToFile(std::string input, const std::string& filename);
 int jsonToGrid(Tilemap& t, const char* s);
+std::string gridToJson(Tilemap t);
