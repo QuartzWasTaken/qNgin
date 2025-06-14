@@ -144,37 +144,6 @@ int jsonToGrid(Tilemap& t, const char* path) // écrit en C avant de passer au C
             }
         }
     }
-    
-    //cJSON_ArrayForEach(tile, tiles) // itérer sur toutes les tiles
-    //{
-
-    //     cJSON* tilemap = 
-
-
-    //     cJSON* type = cJSON_GetObjectItemCaseSensitive(tile, "type");
-    //     cJSON* x = cJSON_GetObjectItemCaseSensitive(tile, "x");
-    //     cJSON* y = cJSON_GetObjectItemCaseSensitive(tile, "y");
-
-    //     if(!cJSON_IsNumber(x) || !cJSON_IsNumber(y))
-    //     {
-    //         status = 0;
-    //         goto end; // goto :glad:
-    //     }
-
-    //     int xPos = x->valueint;
-    //     int yPos = y->valueint;
-    //     int tType = -1;
-    //     std::string sType = type->valuestring; // convertir du type cjson vers int
-    //     if(tileTypeMap.find(sType) != tileTypeMap.end()) // trouver l'entier correspondant dans la textureMap
-    //     {
-    //         tType = tileTypeMap.find(sType)->second;
-    //     }
-        
-    //     t.getListe()[yPos][xPos].setType(tType); // assigner le bon type à la case correspondante
-    //     printf("xPos : %d\n", xPos);
-    //     printf("yPos : %d\n", yPos);
-    //     printf("tType : %d\n", tType);
-    // }
 
     end:
         cJSON_Delete(f);
