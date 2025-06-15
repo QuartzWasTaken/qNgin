@@ -30,6 +30,18 @@ void SceneDebug::Draw()
     int mouseGridX = static_cast<int>(mouseWorldPos.x) / 16;
     int mouseGridY = static_cast<int>(mouseWorldPos.y) / 16;
 
+    if(IsKeyDown(KEY_SPACE))
+    {
+        for(size_t y = 0; y < fgGrid->getListe().size(); y++)
+        {
+            for(size_t x = 0; x < fgGrid->getListe().size(); x++)
+            {
+                fgGrid->getListe()[y][x].setType(0); 
+                fgGrid->getListe()[y][x].setTexture(textureManager->getTexture(0));
+            }
+        }
+    }
+
     if(IsMouseButtonDown(0) && !IsKeyDown(KEY_A) &&
     (mouseGridX) < MAX_MAP_WIDTH &&
     (mouseGridY) < MAX_MAP_HEIGHT &&
