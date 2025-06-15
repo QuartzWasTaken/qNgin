@@ -15,6 +15,7 @@
 #include "TextureManager.h"
 #include "raygui.h"
 #include "SceneDebug.h"
+#include "consts.h"
 
 /*
     TODO :
@@ -27,14 +28,6 @@
 // banque de textures, qu'on charge une fois au démarrage (itérer (unsafe ?))
 // texture id = indice dans la banque/match dans la hashmap (plus flexible)
 
-const int screenWidth = 1280;
-const int screenHeight = 720;
-
-double roundToNearest10(double x)
-{
-    return std::round(x / 10.0) * 10.0;
-}
-
 int main()
 {
     std::cout << "------ Début Main ------" << std::endl;
@@ -46,7 +39,7 @@ int main()
 
     TextureManager textureManager;
     std::cout << "------ Initialisation de la fenêtre... ------" << std::endl;
-    InitWindow(screenWidth, screenHeight, "wawawawa");
+    InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "wawawawa");
 
     std::cout << "------ Chargement des textures... ------" << std::endl;
 

@@ -10,7 +10,6 @@ private:
 
     std::string name;
 
-
     TextureManager* textureManager;
     Camera2D* camera;
     Tilemap* tilemap;

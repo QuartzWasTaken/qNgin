@@ -20,6 +20,7 @@
 t_tileTypeMap tileTypeMap = {
     {"TILE_EMPTY", 0},
     {"TILE_GROUND", 1},
+    {"TILE_GRASS", 2},
     {"TILE_ERROR", -1}
 };
 

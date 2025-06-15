@@ -1,12 +1,20 @@
 #pragma once
 
 #include "Scene.h"
+#include "raylib.h"
+#include "consts.h"
 
 class SceneDebug : public Scene
 {
-//TODO: Finir ce système une bonne fois : passer une réference de cam ?
+private:
+    int paintType = 0;
+    Rectangle UIRect();
+
 public:
     SceneDebug(Camera2D& camera, TextureManager& texManager, Tilemap& tMap);
+    void setPaintType(int i);
+    int getPaintType();
     void Draw();
     void DrawFixed();
+    void DrawPaintGUI();
 };

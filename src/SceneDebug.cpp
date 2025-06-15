@@ -7,10 +7,9 @@
 #include "tileUtils.h"
 #include "Scene.h"
 #include "raygui.h"
+#include "consts.h"
 
 const int cameraMovementSpeed = 10;
-const int screenWidth = 1280;
-const int screenHeight = 720;
 
 SceneDebug::SceneDebug(Camera2D& cam, TextureManager& texMan, Tilemap& tMap) : Scene::Scene(cam, texMan, tMap)
 {
@@ -24,11 +23,20 @@ void SceneDebug::Draw()
     Tilemap* fgGrid = getTilemap();
     
     Vector2 movementVector = Vector2Zero();
-
+    
     Vector2 mouseWorldPos = GetScreenToWorld2D(GetMousePosition(), *camera);
 
-    int mouseGridX = static_cast<int>(mouseWorldPos.x) / 16;
-    int mouseGridY = static_cast<int>(mouseWorldPos.y) / 16;
+    int mouseGridX = static_cast<int>(mouseWorldPos.x) / TILE_SIZE; // Nombres magiques mais c'est du debug donc blc
+    int mouseGridY = static_cast<int>(mouseWorldPos.y) / TILE_SIZE;
+    
+    if(GuiButton((Rectangle){WINDOW_WIDTH - 140, WINDOW_HEIGHT - 50, 120, 30}, "#191#Test !"))
+    {
+        std::string strGrid = gridToJson(*fgGrid);
+        std::cout << gridToJson(*fgGrid) << std::endl;
+    
+        writeStringToFile(strGrid, "ecrituretest.json");
+        return;
+    }
 
     if(IsKeyDown(KEY_SPACE))
     {
@@ -42,14 +50,14 @@ void SceneDebug::Draw()
         }
     }
 
-    if(IsMouseButtonDown(0) && !IsKeyDown(KEY_A) &&
+    if(IsMouseButtonDown(0) &&
     (mouseGridX) < MAX_MAP_WIDTH &&
     (mouseGridY) < MAX_MAP_HEIGHT &&
     (mouseGridX) >= 0 &&
     (mouseGridY) >= 0)
     {
-        fgGrid->getListe()[mouseGridY][mouseGridX].setType(1); 
-        fgGrid->getListe()[mouseGridY][mouseGridX].setTexture(textureManager->getTexture(1));
+        fgGrid->getListe()[mouseGridY][mouseGridX].setType(2); 
+        fgGrid->getListe()[mouseGridY][mouseGridX].setTexture(textureManager->getTexture(2));
     }
 
     if(IsMouseButtonDown(1) &&
@@ -87,13 +95,6 @@ void SceneDebug::Draw()
 
     movementVector = Vector2Zero();
 
-    if(GuiButton((Rectangle){screenWidth - 140, screenHeight - 50, 120, 30}, "#191#Test !"))
-    {
-        std::string strGrid = gridToJson(*fgGrid);
-        std::cout << gridToJson(*fgGrid) << std::endl;
-
-        writeStringToFile(strGrid, "ecrituretest.json");
-    }
 }
 
 void SceneDebug::DrawFixed()
@@ -109,17 +110,37 @@ void SceneDebug::DrawFixed()
     mouseX = GetMouseX();
     mouseY = GetMouseY();
 
-    cameraGridX = camera->target.x / 16;
-    cameraGridY = camera->target.y / 16;
+    cameraGridX = camera->target.x / TILE_SIZE;
+    cameraGridY = camera->target.y / TILE_SIZE;
 
     Vector2 mouseWorldPos = GetScreenToWorld2D(GetMousePosition(), *camera);
 
-    int mouseGridX = static_cast<int>(mouseWorldPos.x) / 16;
-    int mouseGridY = static_cast<int>(mouseWorldPos.y) / 16;
+    int mouseGridX = static_cast<int>(mouseWorldPos.x) / TILE_SIZE;
+    int mouseGridY = static_cast<int>(mouseWorldPos.y) / TILE_SIZE;
 
-    DrawText(TextFormat("MousePos : %d %d", mouseX, mouseY), 0, screenHeight - 130, 20, LIGHTGRAY);
-    DrawText(TextFormat("MouseGridPos : %d %d", mouseGridX, mouseGridY), 0, screenHeight - 100, 20, LIGHTGRAY);
-    DrawText(TextFormat("CameraGridPos : %d %d", cameraGridX, cameraGridY), 0, screenHeight - 70, 20, LIGHTGRAY);
-    DrawText(TextFormat("CamPos : %.0f %.0f", camera->target.x, camera->target.y), 0, screenHeight - 30, 20, LIGHTGRAY);
-    DrawText("PLAYING", 0, screenHeight - 0, 10, LIGHTGRAY);
+    DrawText(TextFormat("MousePos : %d %d", mouseX, mouseY), 0, WINDOW_HEIGHT - 130, 20, LIGHTGRAY);
+    DrawText(TextFormat("MouseGridPos : %d %d", mouseGridX, mouseGridY), 0, WINDOW_HEIGHT - 100, 20, LIGHTGRAY);
+    DrawText(TextFormat("CameraGridPos : %d %d", cameraGridX, cameraGridY), 0, WINDOW_HEIGHT - 70, 20, LIGHTGRAY);
+    DrawText(TextFormat("CamPos : %.0f %.0f", camera->target.x, camera->target.y), 0, WINDOW_HEIGHT - 30, 20, LIGHTGRAY);
+    DrawText("PLAYING", 0, WINDOW_HEIGHT, 10, LIGHTGRAY);
+}
+
+void SceneDebug::setPaintType(int i)
+{
+    paintType = i;
+}
+
+int SceneDebug::getPaintType()
+{
+    return paintType;
+}
+
+void SceneDebug::DrawPaintGUI()
+{
+
+}
+
+void HandleClick()
+{
+
 }

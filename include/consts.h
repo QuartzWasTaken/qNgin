@@ -1,0 +1,3 @@
+#define TILE_SIZE 32
+#define WINDOW_HEIGHT 1280
+#define WINDOW_WIDTH 720

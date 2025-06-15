@@ -6,6 +6,7 @@
 #include "raylib.h"
 #include "Tilemap.h"
 #include "TextureManager.h"
+#include "consts.h"
 
 void renderTilemap(const Tilemap& t, TextureManager& texManager)
 {
@@ -24,7 +25,7 @@ void renderTilemap(const Tilemap& t, TextureManager& texManager)
             }
             else
             {
-                DrawTexture(*tex, x * 16, y * 16, Color{255, 255, 255, 255});
+                DrawTexture(*tex, x * TILE_SIZE, y * TILE_SIZE, Color{255, 255, 255, 255});
             }
         }
     }
