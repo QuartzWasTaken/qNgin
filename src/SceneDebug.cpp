@@ -10,6 +10,7 @@
 #include "consts.h"
 
 const int cameraMovementSpeed = 10;
+bool canDraw;
 
 SceneDebug::SceneDebug(Camera2D& cam, TextureManager& texMan, Tilemap& tMap) : Scene::Scene(cam, texMan, tMap)
 {
@@ -29,13 +30,18 @@ void SceneDebug::Draw()
     int mouseGridX = static_cast<int>(mouseWorldPos.x) / TILE_SIZE; // Nombres magiques mais c'est du debug donc blc
     int mouseGridY = static_cast<int>(mouseWorldPos.y) / TILE_SIZE;
     
-    if(GuiButton((Rectangle){WINDOW_WIDTH - 140, WINDOW_HEIGHT - 50, 120, 30}, "#191#Test !"))
+    if(GuiButton((Rectangle){WINDOW_HEIGHT - 140, WINDOW_WIDTH - 50, 120, 30}, "#2#Save"))
     {
         std::string strGrid = gridToJson(*fgGrid);
         std::cout << gridToJson(*fgGrid) << std::endl;
     
         writeStringToFile(strGrid, "ecrituretest.json");
+        canDraw = false;
         return;
+    }
+    if(!canDraw == IsMouseButtonReleased(0))
+    {
+        canDraw = true;
     }
 
     if(IsKeyDown(KEY_SPACE))
@@ -51,6 +57,7 @@ void SceneDebug::Draw()
     }
 
     if(IsMouseButtonDown(0) &&
+    canDraw &&
     (mouseGridX) < MAX_MAP_WIDTH &&
     (mouseGridY) < MAX_MAP_HEIGHT &&
     (mouseGridX) >= 0 &&
@@ -61,6 +68,7 @@ void SceneDebug::Draw()
     }
 
     if(IsMouseButtonDown(1) &&
+    canDraw &&
     (mouseGridX) < MAX_MAP_WIDTH &&
     (mouseGridY) < MAX_MAP_HEIGHT &&
     (mouseGridX) >= 0 &&
@@ -118,11 +126,11 @@ void SceneDebug::DrawFixed()
     int mouseGridX = static_cast<int>(mouseWorldPos.x) / TILE_SIZE;
     int mouseGridY = static_cast<int>(mouseWorldPos.y) / TILE_SIZE;
 
-    DrawText(TextFormat("MousePos : %d %d", mouseX, mouseY), 0, WINDOW_HEIGHT - 130, 20, LIGHTGRAY);
-    DrawText(TextFormat("MouseGridPos : %d %d", mouseGridX, mouseGridY), 0, WINDOW_HEIGHT - 100, 20, LIGHTGRAY);
-    DrawText(TextFormat("CameraGridPos : %d %d", cameraGridX, cameraGridY), 0, WINDOW_HEIGHT - 70, 20, LIGHTGRAY);
-    DrawText(TextFormat("CamPos : %.0f %.0f", camera->target.x, camera->target.y), 0, WINDOW_HEIGHT - 30, 20, LIGHTGRAY);
-    DrawText("PLAYING", 0, WINDOW_HEIGHT, 10, LIGHTGRAY);
+    DrawText(TextFormat("MousePos : %d %d", mouseX, mouseY), 0, WINDOW_WIDTH - 130, 20, LIGHTGRAY);
+    DrawText(TextFormat("MouseGridPos : %d %d", mouseGridX, mouseGridY), 0, WINDOW_WIDTH - 100, 20, LIGHTGRAY);
+    DrawText(TextFormat("CameraGridPos : %d %d", cameraGridX, cameraGridY), 0, WINDOW_WIDTH - 70, 20, LIGHTGRAY);
+    DrawText(TextFormat("CamPos : %.0f %.0f", camera->target.x, camera->target.y), 0, WINDOW_WIDTH - 30, 20, LIGHTGRAY);
+    DrawText("PLAYING", 0, WINDOW_WIDTH, 10, LIGHTGRAY);
 }
 
 void SceneDebug::setPaintType(int i)

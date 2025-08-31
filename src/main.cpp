@@ -39,7 +39,7 @@ int main()
 
     TextureManager textureManager;
     std::cout << "------ Initialisation de la fenêtre... ------" << std::endl;
-    InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "wawawawa");
+    InitWindow(WINDOW_HEIGHT, WINDOW_WIDTH, "wawawawa");
 
     std::cout << "------ Chargement des textures... ------" << std::endl;
 
@@ -67,16 +67,17 @@ int main()
         
         ClearBackground(RAYWHITE);
 
+        
+        BeginMode2D(camera);
+        
+        renderTilemap(fgGrid, textureManager);
+        
+        EndMode2D();
+        
         dbg.Draw();
 
-        BeginMode2D(camera);
-
-        renderTilemap(fgGrid, textureManager);
-
-        EndMode2D();
-
         dbg.DrawFixed();
-
+        
         EndDrawing();
     }
 

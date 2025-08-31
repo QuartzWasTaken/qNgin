@@ -4,7 +4,6 @@
 #include "tileUtils.h"
 #include "Tilemap.h"
 
-
 Tilemap::Tilemap()
 {
     liste = std::vector<std::vector<Tile>>(MAX_MAP_HEIGHT, std::vector<Tile>(MAX_MAP_WIDTH, Tile(0))); // initialiser avec que des zeros
