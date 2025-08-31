@@ -126,10 +126,10 @@ void SceneDebug::DrawFixed()
     int mouseGridX = static_cast<int>(mouseWorldPos.x) / TILE_SIZE;
     int mouseGridY = static_cast<int>(mouseWorldPos.y) / TILE_SIZE;
 
-    DrawText(TextFormat("MousePos : %d %d", mouseX, mouseY), 0, WINDOW_WIDTH - 130, 20, LIGHTGRAY);
-    DrawText(TextFormat("MouseGridPos : %d %d", mouseGridX, mouseGridY), 0, WINDOW_WIDTH - 100, 20, LIGHTGRAY);
-    DrawText(TextFormat("CameraGridPos : %d %d", cameraGridX, cameraGridY), 0, WINDOW_WIDTH - 70, 20, LIGHTGRAY);
-    DrawText(TextFormat("CamPos : %.0f %.0f", camera->target.x, camera->target.y), 0, WINDOW_WIDTH - 30, 20, LIGHTGRAY);
+    DrawText(TextFormat("MousePos : %d %d", mouseX, mouseY), PADDING_LEFT_RIGHT, WINDOW_HEIGHT - 130 - PADDING_TOP_BOTTOM, 20, LIGHTGRAY);
+    DrawText(TextFormat("MouseGridPos : %d %d", mouseGridX, mouseGridY), PADDING_LEFT_RIGHT, WINDOW_HEIGHT - 100 - PADDING_TOP_BOTTOM, 20, LIGHTGRAY);
+    DrawText(TextFormat("CameraGridPos : %d %d", cameraGridX, cameraGridY), PADDING_LEFT_RIGHT, WINDOW_HEIGHT - 70 - PADDING_TOP_BOTTOM, 20, LIGHTGRAY);
+    DrawText(TextFormat("CamPos : %.0f %.0f", camera->target.x, camera->target.y), PADDING_LEFT_RIGHT, WINDOW_HEIGHT - 40 - PADDING_TOP_BOTTOM, 20, LIGHTGRAY);
     DrawText("PLAYING", 0, WINDOW_WIDTH, 10, LIGHTGRAY);
 
     DrawPaintGUI();
@@ -147,8 +147,13 @@ int SceneDebug::getPaintType()
 
 void SceneDebug::DrawPaintGUI()
 {
-    if(GuiButton((Rectangle){WINDOW_WIDTH, WINDOW_HEIGHT - 50, 50, 50}, "#2#GRASS"))
+    if(GuiButton((Rectangle){WINDOW_WIDTH - 700 - PADDING_LEFT_RIGHT, WINDOW_HEIGHT - 50 - PADDING_TOP_BOTTOM, 90, 50}, "#23#GRASS"))
     {
+        paintType = 2; // LMAO
+    }
 
+    if(GuiButton((Rectangle){WINDOW_WIDTH - 580 - PADDING_LEFT_RIGHT, WINDOW_HEIGHT - 50 - PADDING_TOP_BOTTOM, 90, 50}, "#23#STONE"))
+    {
+        paintType = 1;
     }
 }
