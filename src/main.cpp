@@ -39,7 +39,7 @@ int main()
 
     TextureManager textureManager;
     std::cout << "------ Initialisation de la fenêtre... ------" << std::endl;
-    InitWindow(WINDOW_HEIGHT, WINDOW_WIDTH, "wawawawa");
+    InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "wawawawa");
 
     std::cout << "------ Chargement des textures... ------" << std::endl;
 
@@ -77,7 +77,7 @@ int main()
         dbg.Draw();
 
         dbg.DrawFixed();
-        
+
         EndDrawing();
     }
 

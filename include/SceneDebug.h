@@ -7,7 +7,7 @@
 class SceneDebug : public Scene
 {
 private:
-    int paintType = 0;
+    int paintType = 2;
     Rectangle UIRect();
 
 public:

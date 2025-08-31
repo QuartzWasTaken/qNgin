@@ -10,7 +10,7 @@
 #include "consts.h"
 
 const int cameraMovementSpeed = 10;
-bool canDraw;
+bool canDraw = true;
 
 SceneDebug::SceneDebug(Camera2D& cam, TextureManager& texMan, Tilemap& tMap) : Scene::Scene(cam, texMan, tMap)
 {
@@ -30,15 +30,15 @@ void SceneDebug::Draw()
     int mouseGridX = static_cast<int>(mouseWorldPos.x) / TILE_SIZE; // Nombres magiques mais c'est du debug donc blc
     int mouseGridY = static_cast<int>(mouseWorldPos.y) / TILE_SIZE;
     
-    if(GuiButton((Rectangle){WINDOW_HEIGHT - 140, WINDOW_WIDTH - 50, 120, 30}, "#2#Save"))
+    if(GuiButton((Rectangle){WINDOW_WIDTH - 120 - PADDING_LEFT_RIGHT, WINDOW_HEIGHT - 30 - PADDING_TOP_BOTTOM, 120, 30}, "#2#Save"))
     {
         std::string strGrid = gridToJson(*fgGrid);
-        std::cout << gridToJson(*fgGrid) << std::endl;
     
         writeStringToFile(strGrid, "ecrituretest.json");
         canDraw = false;
         return;
     }
+
     if(!canDraw == IsMouseButtonReleased(0))
     {
         canDraw = true;
@@ -63,8 +63,8 @@ void SceneDebug::Draw()
     (mouseGridX) >= 0 &&
     (mouseGridY) >= 0)
     {
-        fgGrid->getListe()[mouseGridY][mouseGridX].setType(2); 
-        fgGrid->getListe()[mouseGridY][mouseGridX].setTexture(textureManager->getTexture(2));
+        fgGrid->getListe()[mouseGridY][mouseGridX].setType(paintType); 
+        fgGrid->getListe()[mouseGridY][mouseGridX].setTexture(textureManager->getTexture(paintType));
     }
 
     if(IsMouseButtonDown(1) &&
@@ -131,6 +131,8 @@ void SceneDebug::DrawFixed()
     DrawText(TextFormat("CameraGridPos : %d %d", cameraGridX, cameraGridY), 0, WINDOW_WIDTH - 70, 20, LIGHTGRAY);
     DrawText(TextFormat("CamPos : %.0f %.0f", camera->target.x, camera->target.y), 0, WINDOW_WIDTH - 30, 20, LIGHTGRAY);
     DrawText("PLAYING", 0, WINDOW_WIDTH, 10, LIGHTGRAY);
+
+    DrawPaintGUI();
 }
 
 void SceneDebug::setPaintType(int i)
@@ -145,10 +147,8 @@ int SceneDebug::getPaintType()
 
 void SceneDebug::DrawPaintGUI()
 {
+    if(GuiButton((Rectangle){WINDOW_WIDTH, WINDOW_HEIGHT - 50, 50, 50}, "#2#GRASS"))
+    {
 
-}
-
-void HandleClick()
-{
-
+    }
 }
